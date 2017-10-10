@@ -1,0 +1,35 @@
+<html>
+        <head lang="en">
+            <meta charset="UTF-8">
+    
+            <title>Message Board</title>
+        </head>
+    
+        <body> 
+            <h1>The Wall</h1>
+            <form action="/post" method="post" >
+                <h3>Make a post</h3>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+                <label for="message">Message:</label>
+                <textarea name="message" id="message" cols="50" rows="3"></textarea>
+                <button type="submit">Post message</button>
+            </form>
+            <% for (var post of posts) { %>
+                <h1>Name: <%= post.name %></h1> 
+                <h2>Message: <%= post.message %></h2>
+                <% for (var comment of post.comment) { %>
+                    <p>Name: <%= comment.name %></p> 
+                    <p>Comment: <%= comment.comment %></p>
+                <% } %>
+                <form action="/comment/<%= post._id %>" method="post" >
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                    <label for="comment">Comment:</label>
+                    <textarea name="comment" id="comment" cols="50" rows="1"></textarea>
+                    <button type="submit">Post comment</button>
+                </form>
+            <% } %>
+        </body>
+    
+    </html>
