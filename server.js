@@ -13,13 +13,13 @@ mongoose.connect('mongodb://localhost/message_board');
 
 var Schema = mongoose.Schema;
 var PostSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    name: {type: String, required: true, minlength: 4},
     message: {type: String, required: true},
     comment: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
     }, {timestamps: true});
 
 var CommentSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    name: {type: String, required: true, minlength: 4},
     comment: {type: String, required: true},
     _post: [{type: Schema.Types.ObjectId, ref: 'Post'}],
     }, {timestamps: true});
