@@ -33,13 +33,15 @@ app.use(express.static(path.join(__dirname, "./public")));
 // We're using ejs as our view engine
 app.set('view engine', 'ejs');
 
+var errors = [];
 // Here are our routes!
 app.get('/', function(req, res){
     Post.find({}).populate('comment').exec(function(err, results){
         if(err){
             console.log(err);
         } else {
-            res.render('index', {posts: results});
+            console.log(errors);
+            res.render('index', {posts: results, errors: errors});
         }
     });
 });
@@ -48,7 +50,10 @@ app.post('/post', function(req, res){
     Post.create(req.body, function(err){
         if(err) {
             console.log(err);
+            errors = err.errors;
+            res.redirect('/');
         } else {
+            errors = [];
             res.redirect('/');
         }
     });
@@ -64,8 +69,10 @@ app.post('/comment/:id', function(req, res){
             post.comment.push(comment);
             comment.save(function(err){
                 if(err) {
-                    console.log(err);
+                    errors = comment.errors;
+                    res.redirect('/');
                 } else {
+                    errors = [];
                     post.save(function(err){
                         if(err) {
                             console.log(err);

@@ -7,6 +7,13 @@
     
         <body> 
             <h1>The Wall</h1>
+            <div>
+                <% if(typeof(errors) != 'undefined' ) { %>
+                    <% for (var x in errors) { %>
+                        <h3><%= errors[x].message %></h3>
+                    <% } %>
+                <% } %>
+            </div>
             <form action="/post" method="post" >
                 <h3>Make a post</h3>
                 <label for="name">Name:</label>
